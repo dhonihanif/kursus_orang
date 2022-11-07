@@ -5,10 +5,9 @@ app = Flask(__name__)
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_DB"] = "dhoni"
+app.config["MYSQL_DB"] = "kursus"
 
 mysql = MySQL(app)
-
 @app.route("/")
 def hello():
     return render_template("login.html")
@@ -35,9 +34,10 @@ def register_post():
         username = request.form.get("name")
         password = request.form.get("password")
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO login values (%s, %s)" % (username, password))
+        cur.execute("INSERT INTO login(username, password) values (%s, %s)", (username, password))
+        cur2 = cur.fetchall()
         mysql.connection.commit()
         cur.close()
-        return "login.html"
+        return render_template("login.html")
 if __name__ == "__main__":
     app.run(debug=True)
