@@ -16,7 +16,7 @@ def hello():
 def login():
     return render_template("login.html")
 
-@app.route("/login_post", methods=["POST"])
+@app.route("/home", methods=["POST"])
 def login_post():
     username = request.form.get("name")
     password = request.form.get("password")
@@ -26,9 +26,9 @@ def login_post():
     user = [i[0] for i in curfet]
     pw = [i[1] for i in curfet]
     if username in user and password in pw:
-        return render_template("main.html")
+        return render_template("index.html")
     else:
-        return "Gagal login"
+        return render_template("login.html")
 
 @app.route("/register")
 def register():
@@ -44,5 +44,22 @@ def register_post():
         mysql.connection.commit()
         cur.close()
         return render_template("login.html")
+    
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+@app.route("/kursus")
+def service():
+    return render_template("service.html")
+
+@app.route("/menu")
+def menu():
+    return render_template("menu.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
