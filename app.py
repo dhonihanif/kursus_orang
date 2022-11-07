@@ -20,10 +20,15 @@ def login():
 def login_post():
     username = request.form.get("name")
     password = request.form.get("password")
-    if username == "Dhoni" and password == "123":
-        return "Hello World"
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM login")
+    curfet = cur.fetchall()
+    user = [i[0] for i in curfet]
+    pw = [i[1] for i in curfet]
+    if username in user and password in pw:
+        return render_template("main.html")
     else:
-        return render_template("login.html")
+        return "Gagal login"
 
 @app.route("/register")
 def register():
