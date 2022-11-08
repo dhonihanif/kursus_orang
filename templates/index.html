@@ -51,10 +51,18 @@
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact</a>
                     {% if login %}
-                    <a href="{{ url_for('logout') }}" class="nav-item nav-link">logout</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Profile</a>
+
+                        <div class="dropdown-menu text-capitalize">
+                            <a href="{{ url_for('logout') }}" class="dropdown-item">Profile</a>
+                            <a href="{{ url_for('logout') }}" class="dropdown-item">logout</a>
+                        </div>
+                    </div>
                     {% else %}
                     <a href="{{ url_for('login') }}" class="nav-item nav-link">login</a>
                     {% endif %}
+                    
                 </div>
             </div>
         </nav>
