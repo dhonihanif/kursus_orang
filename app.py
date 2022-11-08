@@ -10,7 +10,7 @@ app.config["MYSQL_DB"] = "kursus"
 mysql = MySQL(app)
 @app.route("/")
 def hello():
-    return render_template("login.html")
+    return render_template("index.html")
 
 @app.route("/login")
 def login():
