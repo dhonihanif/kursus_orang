@@ -50,7 +50,11 @@
                         </div>
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact</a>
-                    <a href="/contact" class="nav-item nav-link">Login</a>
+                    {% if login %}
+                    <a href="{{ url_for('logout') }}" class="nav-item nav-link">logout</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-item nav-link">login</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
