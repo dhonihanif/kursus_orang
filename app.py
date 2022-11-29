@@ -49,7 +49,7 @@ def register():
         cur2 = cur.fetchall()
         mysql.connection.commit()
         cur.close()
-        return redirect(url_for("register"))
+        return redirect(url_for("login"))
     else:
         return render_template("register.html")
 
@@ -86,5 +86,26 @@ def contact():
         login = True
     return render_template("contact.html", login=login)
 
+@app.route("/profiles")
+def profiles():
+    login = False
+    if "username" in session:
+        login = True
+    return render_template("profiles.html", login=login)
+
+@app.route("/reservation")
+def reservation():
+    login = False
+    if "username" in session:
+        login = True
+    return render_template("reservation.html", login=login)
+
+@app.route("/testimonial")
+def testimonial():
+    login = False
+    if "username" in session:
+        login = True
+    return render_template("testimonial.html", login=login)
+    
 if __name__ == "__main__":
     app.run(debug=True)
