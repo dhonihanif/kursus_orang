@@ -103,9 +103,10 @@ def reservation():
 @app.route("/testimonial")
 def testimonial():
     login = False
+    user = [i[0] for i in curfet]
     if "username" in session:
         login = True
-    return render_template("testimonial.html", login=login)
-    
+    return render_template("testimonial.html", login=login, user=user)
+
 if __name__ == "__main__":
     app.run(debug=True)
