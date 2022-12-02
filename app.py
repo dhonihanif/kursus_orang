@@ -15,7 +15,7 @@ def index():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM login")
     curfet = cur.fetchall()
-    user = [i[0] for i in curfet]
+    user = [i[2] for i in curfet]
     login = False
     if "username" in session:
         login = True
@@ -29,9 +29,12 @@ def login():
         password = request.form.get("password")
         user = [i[0] for i in curfet]
         pw = [i[1] for i in curfet]
+        nama = [i[2] for i in curfet]
+        name = nama[user.index(username)]
         if username in user and password in pw:
             session["username"] = username
             session["password"] = password
+            session["nama"] = name
             return redirect(url_for("index"))
         else:
             return render_template("login.html")
@@ -42,10 +45,11 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form.get("name")
+        username = request.form.get("username")
         password = request.form.get("password")
+        name = request.form.get("name")
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO login(username, password) values (%s, %s)", (username, password))
+        cur.execute("INSERT INTO login(username, password, name) values (%s, %s, %s)", (username, password, name))
         cur2 = cur.fetchall()
         mysql.connection.commit()
         cur.close()
@@ -70,7 +74,7 @@ def service():
     login = False
     if "username" in session:
         login = True
-    return render_template("service.html", login=login)
+    return render_template("kursus.html", login=login)
 
 @app.route("/menu")
 def menu():
@@ -103,10 +107,35 @@ def reservation():
 @app.route("/testimonial")
 def testimonial():
     login = False
-    user = [i[0] for i in curfet]
+    user = [i[2] for i in curfet]
     if "username" in session:
         login = True
     return render_template("testimonial.html", login=login, user=user)
+
+@app.route("/pesan", methods=["GET", "POST"])
+def pesan():
+    if request.method == "POST":
+        pesan = request.form.get("pesan")
+        username = session["username"]
+        nama = session["nama"]
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO pesanan(pesan, username, name) values (%s, %s, '%s')" % (pesan, username, nama))
+        cur2 = cur.fetchall()
+        cur.close()
+        return redirect(url_for("index"))
+    else:
+        login = False
+        if "username" in session:
+            login = True
+
+        return render_template("pesan.html", login=login)
+
+@app.route("/pesanan")
+def pesanan():
+    login = False
+    if "username" in session:
+        login = True
+
 
 if __name__ == "__main__":
     app.run(debug=True)

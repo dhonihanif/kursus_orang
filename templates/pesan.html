@@ -31,7 +31,7 @@
     <div class="container-fluid p-0 nav-bar">
         <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
             <a href="index.html" class="navbar-brand px-lg-4 m-0">
-                <h1 class="m-0 display-4 text-uppercase text-white">KOPPEE</h1>
+                <h1 class="m-0 display-4 text-uppercase text-white">Pesan</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -70,13 +70,13 @@
 
 
     <!-- Page Header Start -->
-    <div class="container-fluid pageabcd   -header mb-5 position-relative overlay-bottom">
+    <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
         <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Pesan Paket</h1>
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Pesan</h1>
             <div class="d-inline-flex mb-lg-5">
                 <p class="m-0 text-white"><a class="text-white" href="">Home</a></p>
                 <p class="m-0 text-white px-2">/</p>
-                <p class="m-0 text-white">Pesan Paket</p>
+                <p class="m-0 text-white">Pesan</p>
             </div>
         </div>
     </div>
@@ -91,31 +91,28 @@
                     <div class="col-lg-6 my-5 my-lg-0">
                         <div class="p-5">
                             <div class="mb-4">
-                                <h1 class="display-3 text-primary">Pesan Paket Sekarang</h1>
-                                <h1 class="text-white">Pesan Paket Sekarang Juga</h1>
+                                <h1 class="display-3 text-primary">Pesan Kursus</h1>
+                                <h1 class="text-white">Pesan Kursus yang Tersedia Sekarang</h1>
                             </div>
-                            <p class="text-white">Benefit dari lomba yang diikuti apabila anda menang juara 1:</p>
+                            <p class="text-white">Benefit yang didapatkan apabila anda memesan kursus:</p>
                             <ul class="list-inline text-white m-0">
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Hadiah Rp.500.000,00</li>
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Gratis paket kursus 1 hari</li>
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Gratis e-book roblox</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Bermain jadi tambah jago</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Paket hemat</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Waktu mengikuti fleksible</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="text-center p-5" style="background: rgba(51, 33, 29, .8);">
-                            <h1 class="text-white mb-4 mt-5">Daftar Lomba</h1>
-                            <form class="/lomba">
-                                <div class="form-group">
-                                    <input type="text" name="name" class="form-control bg-transparent border-primary p-4" placeholder="Name"
-                                        required="required" />
-                                </div>
+                            <h1 class="text-white mb-4 mt-5">Daftar Kursus</h1>
+                            <form action="/pesan" method="post">
                                 <div class="form-group">
                                     <select class="custom-select bg-transparent border-primary px-4" style="height: 49px;">
-                                        <option selected name="lomba">Pilih Lomba</option>
-                                        <option value="Pasang Kotak">Pasang Kotak</option>
-                                        <option value="Barlari">Berlari</option>
-                                        <option value="Berdansa">Berdansa</option>
+                                        <option selected name="pesan">Pilih Kursus</option>
+                                        <option value="Pasang Kotak">Paket 1 Hari</option>
+                                        <option value="Barlari">Paket 1 Minggu</option>
+                                        <option value="Berdansa">Paket 1 Bulan</option>
+                                        <option value="Berdansa">Paket 1 Tahun</option>
                                     </select>
                                 </div>
                                 
