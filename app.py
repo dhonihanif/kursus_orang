@@ -118,11 +118,13 @@ def pesan():
         pesan = request.form.get("pesan")
         username = session["username"]
         nama = session["nama"]
+        pembayaran = request.form.get("pembayaran")
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO pesanan(pesan, username, name) values (%s, %s, '%s')" % (pesan, username, nama))
+        cur.execute("INSERT INTO pesanan(pesan, username, name, pembayaran) values ('%s', '%s', '%s', '%s')" % (pesan, username, nama))
         cur2 = cur.fetchall()
+        mysql.connection.commit()
         cur.close()
-        return redirect(url_for("index"))
+        return redirect(url_for("pesanan"))
     else:
         login = False
         if "username" in session:
@@ -135,7 +137,7 @@ def pesanan():
     login = False
     if "username" in session:
         login = True
-
+    return render_template("cetakpesan.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
