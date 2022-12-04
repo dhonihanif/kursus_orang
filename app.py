@@ -155,14 +155,12 @@ def cetak():
 
 @app.route("/hapus")
 def hapus():
-    login = False
-    if "username" in session:
-        login = True
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM pesanan WHERE username='{}'".format(session["username"]))
     cur2 = cur.fetchall()
     mysql.connection.commit()
     cur.close()
     return redirect(url_for("index"))
+
 if __name__ == "__main__":
     app.run(debug=True)
