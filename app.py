@@ -70,7 +70,7 @@ def about():
     return render_template("about.html", login=login)
 
 @app.route("/kursus")
-def service():
+def kursus():
     login = False
     if "username" in session:
         login = True
@@ -161,6 +161,17 @@ def hapus():
     mysql.connection.commit()
     cur.close()
     return redirect(url_for("index"))
+
+@app.route("/lihatpesanan")
+def lihatpesanan():
+    login = False
+    if "username" in session:
+        login = True
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pesanan WHERE username='{}'".format(session["username"]))
+    curfet = cur.fetchall()
+    cur.close()
+    return render_template("lihatpesanan.html", login=login, curfet=curfet)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -31,7 +31,7 @@
     <div class="container-fluid p-0 nav-bar">
         <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
             <a href="index.html" class="navbar-brand px-lg-4 m-0">
-                <h1 class="m-0 display-4 text-uppercase text-white">KOPPEE</h1>
+                <h1 class="m-0 display-4 text-uppercase text-white">Pesan</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -84,11 +84,11 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
         <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Reservation</h1>
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Pesan</h1>
             <div class="d-inline-flex mb-lg-5">
                 <p class="m-0 text-white"><a class="text-white" href="">Home</a></p>
                 <p class="m-0 text-white px-2">/</p>
-                <p class="m-0 text-white">Reservation</p>
+                <p class="m-0 text-white">Pesan</p>
             </div>
         </div>
     </div>
@@ -103,43 +103,48 @@
                     <div class="col-lg-6 my-5 my-lg-0">
                         <div class="p-5">
                             <div class="mb-4">
-                                <h1 class="display-3 text-primary">Ikuti Lomba</h1>
-                                <h1 class="text-white">Ikuti Lomba Roblox Sekarang</h1>
+                                <h1 class="display-3 text-primary">Pesan Kursus</h1>
+                                <h1 class="text-white">Pesan Kursus yang Tersedia Sekarang</h1>
                             </div>
-                            <p class="text-white">Benefit dari lomba yang diikuti apabila anda menang juara 1:</p>
+                            <p class="text-white">Benefit yang didapatkan apabila anda memesan kursus:</p>
                             <ul class="list-inline text-white m-0">
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Hadiah Rp.500.000,00</li>
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Gratis paket kursus 1 hari</li>
-                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Gratis e-book roblox</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Bermain jadi tambah jago</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Paket hemat</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Waktu mengikuti fleksible</li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-6">
+                        {% if curfet %}
                         <div class="text-center p-5" style="background: rgba(51, 33, 29, .8);">
-                            <h1 class="text-white mb-4 mt-5">Daftar Lomba</h1>
-                            <form action="/lomba">
-                                <div class="form-group">
-                                    <input type="text" name="name" class="form-control bg-transparent border-primary p-4" placeholder="Name"
-                                        required="required" />
-                                </div>
-                                <div class="form-group">
-                                    <select class="custom-select bg-transparent border-primary px-4" style="height: 49px;">
-                                        <option selected name="lomba">Pilih Lomba</option>
-                                        <option value="Pasang Kotak">Pasang Kotak</option>
-                                        <option value="Barlari">Berlari</option>
-                                        <option value="Berdansa">Berdansa</option>
-                                    </select>
-                                </div>
-                                
-                                <div>
-                                    {% if login %}
-                                    <button class="btn btn-primary btn-block font-weight-bold py-3" type="submit">Submit</button>
-                                    {% else %}
-                                    <a href="{{ url_for('login') }}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Login terlebih dahulu</a>
-                                    {% endif %}
-                                </div>
-                            </form>
+                            <h1 class="text-white mb-4 mt-5">Bukti Pesanan</h1>
+                            <p class="text-white mb-4 mt-5">Pesanan : {{curfet[0][0]}}</p>
+                            <p class="text-white mb-4 mt-5">Nama : {{curfet[0][2]}}</p>
+                            <p class="text-white mb-4 mt-5">Pembayaran : {{curfet[0][3]}}</p>
+                            <p class="text-white mb-4 mt-5">Bayar : {{curfet[0][4]}}</p>
+                            
                         </div>
+                        <div>
+                            {% if login %}
+                            <button class="btn btn-primary btn-block font-weight-bold py-3" type="submit" onclick="window.print()">cetak</button>
+                            <a href="{{ url_for('hapus') }}" class="btn btn-primary btn-block font-weight-bold py-3">Batalkan Sekarang</a>
+                            {% else %}
+                            <a href="{{ url_for('login') }}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Login terlebih dahulu</a>
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="text-center p-5" style="background: rgba(51, 33, 29, .8);">
+                            <h1 class="text-white mb-4 mt-5">Anda Belum Memesan Apapun</h1>
+                        </div>
+                        
+                        <div>
+                            {% if login %}
+                            <a href="{{ url_for('pesan') }}" class="btn btn-primary btn-block font-weight-bold py-3">Pesan Sekarang</a>
+                            {% else %}
+                            <a href="{{ url_for('login') }}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Login terlebih dahulu</a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
