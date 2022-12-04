@@ -120,7 +120,7 @@ def pesan():
         nama = session["nama"]
         pembayaran = request.form.get("pembayaran")
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO pesanan(pesan, username, name, pembayaran) values ('%s', '%s', '%s', '%s')" % (pesan, username, nama))
+        cur.execute("INSERT INTO pesanan(pesan, username, name, pembayaran) values ('%s', '%s', '%s', '%s')" % (pesan, username, nama, pembayaran))
         cur2 = cur.fetchall()
         mysql.connection.commit()
         cur.close()
@@ -137,7 +137,32 @@ def pesanan():
     login = False
     if "username" in session:
         login = True
-    return render_template("cetakpesan.html")
+    return render_template("cetakpesan.html", login=login)
 
+@app.route("/cetak")
+def cetak():
+    login = False
+    if "username" in session:
+        login = True
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE pesanan SET bayar='Sudah bayar' WHERE username='{}'".format(session["username"]))
+    cur2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.execute("SELECT * FROM pesanan WHERE username='{}'".format(session["username"]))
+    curfet = cur.fetchall()
+
+    return render_template("cetak.html", login=login, curfet=curfet)
+
+@app.route("/hapus")
+def hapus():
+    login = False
+    if "username" in session:
+        login = True
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM pesanan WHERE username='{}'".format(session["username"]))
+    cur2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for("index"))
 if __name__ == "__main__":
     app.run(debug=True)
