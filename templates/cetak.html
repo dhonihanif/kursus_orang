@@ -121,7 +121,9 @@
                             <p class="text-white mb-4 mt-5">Nama : {{curfet[0][2]}}</p>
                             <p class="text-white mb-4 mt-5">Pembayaran : {{curfet[0][3]}}</p>
                             <p class="text-white mb-4 mt-5">Bayar : {{curfet[0][4]}}</p>
-                            
+                            {% if curfet[0][4] == "Belum bayar" %}
+                            <p class="text-white mb-4 mt-5">Silahkan Bayar Melalui Bank BRI 0123213213</p>
+                            {% endif %}
                         </div>
                         <div>
                             {% if login %}
