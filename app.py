@@ -19,8 +19,8 @@ def index():
     login = False
     if "username" in session:
         login = True
-    return render_template("index.html", login=login, user=user, user2=session["username"])
-
+        return render_template("index.html", login=login, user=user, user2=session["username"])
+    return render_template("index.html", login=login, user=user)
     
 
 @app.route("/login", methods=["GET", "POST"])
@@ -31,7 +31,7 @@ def login():
         user = [i[0] for i in curfet]
         pw = [i[1] for i in curfet]
         nama = [i[2] for i in curfet]
-        name = nama[user.index(username)]
+        name = nama[user.index(username)-1]
         if username in user and password in pw:
             session["username"] = username
             session["password"] = password
@@ -49,8 +49,11 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         name = request.form.get("name")
+        usia = request.form.get("usia")
+        tinggal = request.form.get("tinggal")
+        telp = request.form.get("telp")
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO login(username, password, name) values (%s, %s, %s)", (username, password, name))
+        cur.execute("INSERT INTO login(username, password, name, usia, tempat_tinggal, telp) values (%s, %s, %s, %s, %s, %s)", (username, password, name, usia, tinggal, telp))
         cur2 = cur.fetchall()
         mysql.connection.commit()
         cur.close()
@@ -60,7 +63,9 @@ def register():
 
 @app.route("/logout")
 def logout():
-    session.pop('username',None)
+    session.pop("username",None)
+    session.pop("password", None)
+    session.pop("nama", None)
     return redirect(url_for('index'))
 
 @app.route("/about")
@@ -119,7 +124,12 @@ def profiles():
     login = False
     if "username" in session:
         login = True
-    return render_template("profiles.html", login=login)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * from login WHERE username='{}'".format(session["username"]))
+    cur2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    return render_template("profiles.html", login=login, user=session["username"], cur2=cur2)
 
 @app.route("/reservation")
 def reservation():
