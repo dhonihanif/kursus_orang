@@ -80,15 +80,15 @@ def kursus():
     login = False
     if "username" in session:
         login = True
-    if session["username"] == "admin":
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM pesanan")
-        cur2 = cur.fetchall()
-        mysql.connection.commit()
-        cur.close()
-        return render_template("kursusadmin.html", login=login, cur2=cur2)
-    else:
-        return render_template("kursus.html", login=login)
+        if session["username"] == "admin":
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT * FROM pesanan")
+            cur2 = cur.fetchall()
+            mysql.connection.commit()
+            cur.close()
+            return render_template("kursusadmin.html", login=login, cur2=cur2)
+    
+    return render_template("kursus.html", login=login)
 
 
 @app.route("/valid/<name>")
@@ -172,9 +172,6 @@ def cetak():
     if "username" in session:
         login = True
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE pesanan SET bayar='Sudah bayar' WHERE username='{}'".format(session["username"]))
-    cur2 = cur.fetchall()
-    mysql.connection.commit()
     cur.execute("SELECT * FROM pesanan WHERE username='{}'".format(session["username"]))
     curfet = cur.fetchall()
 
