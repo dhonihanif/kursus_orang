@@ -46,7 +46,9 @@
 
                         <div class="dropdown-menu text-capitalize">
                             <a href="{{ url_for('kursus') }}" class="dropdown-item">Pesan Kursus</a>
+                            {% if user != "admin" %}
                             <a href="{{ url_for('lihatpesanan') }}" class="dropdown-item">Lihat Pesanan</a>
+                            {% endif %}
                         </div>
                     </div>
                     {% else %}
@@ -54,6 +56,7 @@
                     {% endif %}
                     
                     <a href="/menu" class="nav-item nav-link">Menu</a>
+                    {% if user != "admin" %}
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu text-capitalize">
@@ -62,6 +65,7 @@
                         </div>
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact</a>
+                    {% endif %}
                     {% if login %}
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Profile</a>

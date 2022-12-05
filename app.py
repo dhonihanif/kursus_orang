@@ -19,13 +19,8 @@ def index():
     login = False
     if "username" in session:
         login = True
-        if session["username"] == "admin":
-            return render_template("indexadmin.html", login=login, user=user)
-        else:
-            return render_template("index.html", login=login, user=user)
-    else:
-        return render_template("index.html", login=login, user=user)
-        
+    return render_template("index.html", login=login, user=user, user2=session["username"])
+
     
 
 @app.route("/login", methods=["GET", "POST"])
@@ -71,25 +66,25 @@ def logout():
 @app.route("/about")
 def about():
     login = False
+    user = ""
     if "username" in session:
         login = True
-    return render_template("about.html", login=login)
+        user = session["username"]
+    return render_template("about.html", login=login, user=user)
 
 @app.route("/kursus")
 def kursus():
     login = False
+    user = ""
     if "username" in session:
         login = True
-        if session["username"] == "admin":
-            cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM pesanan")
-            cur2 = cur.fetchall()
-            mysql.connection.commit()
-            cur.close()
-            return render_template("kursusadmin.html", login=login, cur2=cur2)
-    
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM pesanan")
+        cur2 = cur.fetchall()
+        cur.close()
+        user = session["username"]
+        return render_template("kursus.html", login=login, cur2=cur2, user=user)
     return render_template("kursus.html", login=login)
-
 
 @app.route("/valid/<name>")
 def valid(name):
@@ -106,9 +101,11 @@ def valid(name):
 @app.route("/menu")
 def menu():
     login = False
+    user = ""
     if "username" in session:
         login = True
-    return render_template("menu.html", login=login)
+        user = session["username"]
+    return render_template("menu.html", login=login, user=user)
 
 @app.route("/contact")
 def contact():
@@ -141,23 +138,25 @@ def testimonial():
 
 @app.route("/pesan", methods=["GET", "POST"])
 def pesan():
+    login = False
+    if "username" in session:
+        login = True
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM pesanan")
+    curfet = cur.fetchall()
+    user = [i[1] for i in curfet if i[1] == session["username"]]
     if request.method == "POST":
         pesan = request.form.get("pesan")
         username = session["username"]
         nama = session["nama"]
         pembayaran = request.form.get("pembayaran")
-        cur = mysql.connection.cursor()
         cur.execute("INSERT INTO pesanan(pesan, username, name, pembayaran) values ('%s', '%s', '%s', '%s')" % (pesan, username, nama, pembayaran))
         cur2 = cur.fetchall()
-        mysql.connection.commit()
+        mysql.connection.commit()        
         cur.close()
-        return redirect(url_for("pesanan"))
+        return redirect(url_for("pesanan", login=login, user=user))
     else:
-        login = False
-        if "username" in session:
-            login = True
-
-        return render_template("pesan.html", login=login)
+        return render_template("pesan.html", login=login, user=user)
 
 @app.route("/pesanan")
 def pesanan():
@@ -177,14 +176,14 @@ def cetak():
 
     return render_template("cetak.html", login=login, curfet=curfet)
 
-@app.route("/hapus")
-def hapus():
+@app.route("/hapus/<name>")
+def hapus(name):
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM pesanan WHERE username='{}'".format(session["username"]))
+    cur.execute("DELETE FROM pesanan WHERE username='{}'".format(name))
     cur2 = cur.fetchall()
     mysql.connection.commit()
     cur.close()
-    return redirect(url_for("index"))
+    return redirect(url_for("kursus"))
 
 @app.route("/lihatpesanan")
 def lihatpesanan():

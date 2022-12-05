@@ -84,7 +84,7 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
         <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 400px">
-            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Pesan</h1>
+            <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">ROBLOX</h1>
             <div class="d-inline-flex mb-lg-5">
                 <p class="m-0 text-white"><a class="text-white" href="">Home</a></p>
                 <p class="m-0 text-white px-2">/</p>
@@ -128,7 +128,7 @@
                         <div>
                             {% if login %}
                             <button class="btn btn-primary btn-block font-weight-bold py-3" type="submit" onclick="window.print()">cetak</button>
-                            <a href="{{ url_for('hapus') }}" class="btn btn-primary btn-block font-weight-bold py-3">Batalkan Sekarang</a>
+                            <a href="{{ url_for('hapus', name=session['username']) }}" class="btn btn-primary btn-block font-weight-bold py-3">Batalkan Sekarang</a>
                             {% else %}
                             <a href="{{ url_for('login') }}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Login terlebih dahulu</a>
                             {% endif %}

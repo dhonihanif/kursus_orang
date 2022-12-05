@@ -46,7 +46,9 @@
 
                         <div class="dropdown-menu text-capitalize">
                             <a href="{{ url_for('kursus') }}" class="dropdown-item">Pesan Kursus</a>
+                            {% if user != "admin" %}
                             <a href="{{ url_for('lihatpesanan') }}" class="dropdown-item">Lihat Pesanan</a>
+                            {% endif %}
                         </div>
                     </div>
                     {% else %}
@@ -54,6 +56,7 @@
                     {% endif %}
                     
                     <a href="/menu" class="nav-item nav-link">Menu</a>
+                    {% if user != "admin" %}
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu text-capitalize">
@@ -62,6 +65,7 @@
                         </div>
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact</a>
+                    {% endif %}
                     {% if login %}
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Profile</a>
@@ -103,6 +107,7 @@
                 <h1 class="display-4">Kursus yang Tersedia</h1>
             </div>
             <div class="row">
+                {% if user != "admin" %}
                 <div class="col-lg-6 mb-5">
                     <div class="row align-items-center">
                         <div class="col-sm-5">
@@ -151,6 +156,28 @@
                         </div>
                     </div>
                 </div>
+                {% else %}
+                {% for i in cur2 %}
+                <div class="col-lg-6 mb-5">
+                    <div class="row align-items-center">
+                        <div class="col-sm-5">
+                            <img class="img-fluid mb-3 mb-sm-0" src="/static/styles/images/service-1.jpg" alt="">
+                        </div>
+                        <div class="col-sm-7">
+                            <h4><i class="fa fa-truck service-icon"></i>Kursus roblox {{i[0]}}</h4>
+                            <p name="username" class="m-0">{{i[1]}}</p>
+                            {% if i[4] == "Belum bayar" %}
+                            <a href="/valid/{{i[1]}}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Valid Sekarang</a>
+                            <a href="/hapus/{{i[1]}}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Batalkan Pesanan</a>
+                            {% else %}
+                            <i class="fa fa-check text-primary mr-3"></i>
+                            <a href="/hapus/{{i[1]}}" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Selesai</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
