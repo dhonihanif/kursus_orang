@@ -19,8 +19,14 @@ def index():
     login = False
     if "username" in session:
         login = True
-    return render_template("index.html", login=login, user=user)
-
+        if session["username"] == "admin":
+            return render_template("indexadmin.html", login=login, user=user)
+        else:
+            return render_template("index.html", login=login, user=user)
+    else:
+        return render_template("index.html", login=login, user=user)
+        
+    
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -74,7 +80,28 @@ def kursus():
     login = False
     if "username" in session:
         login = True
-    return render_template("kursus.html", login=login)
+    if session["username"] == "admin":
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM pesanan")
+        cur2 = cur.fetchall()
+        mysql.connection.commit()
+        cur.close()
+        return render_template("kursusadmin.html", login=login, cur2=cur2)
+    else:
+        return render_template("kursus.html", login=login)
+
+
+@app.route("/valid/<name>")
+def valid(name):
+    login = False
+    if "username" in session:
+        login = True
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE pesanan SET bayar='Sudah bayar' WHERE username='{}'".format(name))
+    cur2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for("kursus"))
 
 @app.route("/menu")
 def menu():
